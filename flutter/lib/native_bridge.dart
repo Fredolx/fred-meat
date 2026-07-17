@@ -25,15 +25,15 @@ class NativeBridge {
 
   static DynamicLibrary _openDynamicLibrary() {
     if (Platform.isAndroid || Platform.isLinux) {
-      return DynamicLibrary.open("libfred_tv_lib.so");
+      return DynamicLibrary.open("libfred_meat_lib.so");
     }
     if (Platform.isIOS || Platform.isMacOS) {
       return DynamicLibrary.process();
     }
     if (Platform.isWindows) {
-      return DynamicLibrary.open("fred_tv_lib.dll");
+      return DynamicLibrary.open("fred_meat_lib.dll");
     }
-    return DynamicLibrary.open("libfred_tv_lib.so");
+    return DynamicLibrary.open("libfred_meat_lib.so");
   }
 
   NativeBridge._internal(this._bindings) {

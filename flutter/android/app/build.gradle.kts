@@ -30,8 +30,20 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
+}
+
+repositories {
+    flatDir { dirs("libs") }
+}
+
+dependencies {
+    implementation(mapOf("name" to "btleplug", "ext" to "aar"))
 }
 
 kotlin {

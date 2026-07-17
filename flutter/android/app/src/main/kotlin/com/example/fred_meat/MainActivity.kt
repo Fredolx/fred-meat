@@ -4,6 +4,6 @@ import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity() {
     init {
-        System.loadLibrary("libfred_meat_lib.so")
+        System.loadLibrary("fred_meat_lib")
     }
 }
