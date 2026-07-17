@@ -1,6 +1,6 @@
 {
-    "name": "fred_meat",
-    "short_name": "fred_meat",
+    "name": "Fred Meat",
+    "short_name": "Fred Meat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
