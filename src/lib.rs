@@ -4,13 +4,14 @@ use crate::c::FfiCallback;
 use anyhow::Ok;
 
 #[cfg(target_os = "android")]
-use std::ffi::c_void;
-#[cfg(target_os = "android")]
 use jni::{
-    sys::{jint, JNI_VERSION_1_6},
     JavaVM,
+    sys::{JNI_VERSION_1_6, jint},
 };
+#[cfg(target_os = "android")]
+use std::ffi::c_void;
 
+mod ble;
 mod c;
 mod generated_proto;
 mod log;
