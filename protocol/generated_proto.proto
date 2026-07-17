@@ -1,0 +1,16 @@
+syntax = "proto3";
+package generated_proto;
+
+message Test {
+  bool something = 1;
+}
+
+message FFIResult {
+  bool success = 1;
+  optional string error_message = 2;
+  oneof data {
+    Test test = 3; 
+  }
+}
+
+
