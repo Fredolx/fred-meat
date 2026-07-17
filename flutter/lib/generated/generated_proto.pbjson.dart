@@ -15,17 +15,73 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use testDescriptor instead')
-const Test$json = {
-  '1': 'Test',
+@$core.Deprecated('Use initMessageDescriptor instead')
+const InitMessage$json = {
+  '1': 'InitMessage',
   '2': [
-    {'1': 'something', '3': 1, '4': 1, '5': 8, '10': 'something'},
+    {'1': 'db_path', '3': 1, '4': 1, '5': 9, '10': 'dbPath'},
+    {'1': 'temp_path', '3': 2, '4': 1, '5': 9, '10': 'tempPath'},
   ],
 };
 
-/// Descriptor for `Test`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List testDescriptor =
-    $convert.base64Decode('CgRUZXN0EhwKCXNvbWV0aGluZxgBIAEoCFIJc29tZXRoaW5n');
+/// Descriptor for `InitMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List initMessageDescriptor = $convert.base64Decode(
+    'CgtJbml0TWVzc2FnZRIXCgdkYl9wYXRoGAEgASgJUgZkYlBhdGgSGwoJdGVtcF9wYXRoGAIgAS'
+    'gJUgh0ZW1wUGF0aA==');
+
+@$core.Deprecated('Use strMessageDescriptor instead')
+const StrMessage$json = {
+  '1': 'StrMessage',
+  '2': [
+    {'1': 'value', '3': 1, '4': 1, '5': 9, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `StrMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List strMessageDescriptor =
+    $convert.base64Decode('CgpTdHJNZXNzYWdlEhQKBXZhbHVlGAEgASgJUgV2YWx1ZQ==');
+
+@$core.Deprecated('Use optStrMessageDescriptor instead')
+const OptStrMessage$json = {
+  '1': 'OptStrMessage',
+  '2': [
+    {'1': 'value', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'value', '17': true},
+  ],
+  '8': [
+    {'1': '_value'},
+  ],
+};
+
+/// Descriptor for `OptStrMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List optStrMessageDescriptor = $convert.base64Decode(
+    'Cg1PcHRTdHJNZXNzYWdlEhkKBXZhbHVlGAEgASgJSABSBXZhbHVliAEBQggKBl92YWx1ZQ==');
+
+@$core.Deprecated('Use boolMessageDescriptor instead')
+const BoolMessage$json = {
+  '1': 'BoolMessage',
+  '2': [
+    {'1': 'value', '3': 1, '4': 1, '5': 8, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `BoolMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List boolMessageDescriptor =
+    $convert.base64Decode('CgtCb29sTWVzc2FnZRIUCgV2YWx1ZRgBIAEoCFIFdmFsdWU=');
+
+@$core.Deprecated('Use settingsDescriptor instead')
+const Settings$json = {
+  '1': 'Settings',
+  '2': [
+    {'1': 'test', '3': 1, '4': 1, '5': 8, '9': 0, '10': 'test', '17': true},
+  ],
+  '8': [
+    {'1': '_test'},
+  ],
+};
+
+/// Descriptor for `Settings`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode(
+    'CghTZXR0aW5ncxIXCgR0ZXN0GAEgASgISABSBHRlc3SIAQFCBwoFX3Rlc3Q=');
 
 @$core.Deprecated('Use fFIResultDescriptor instead')
 const FFIResult$json = {
@@ -42,13 +98,22 @@ const FFIResult$json = {
       '17': true
     },
     {
-      '1': 'test',
+      '1': 'bool_message',
       '3': 3,
       '4': 1,
       '5': 11,
-      '6': '.generated_proto.Test',
+      '6': '.generated_proto.BoolMessage',
       '9': 0,
-      '10': 'test'
+      '10': 'boolMessage'
+    },
+    {
+      '1': 'settings',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.generated_proto.Settings',
+      '9': 0,
+      '10': 'settings'
     },
   ],
   '8': [
@@ -60,5 +125,7 @@ const FFIResult$json = {
 /// Descriptor for `FFIResult`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fFIResultDescriptor = $convert.base64Decode(
     'CglGRklSZXN1bHQSGAoHc3VjY2VzcxgBIAEoCFIHc3VjY2VzcxIoCg1lcnJvcl9tZXNzYWdlGA'
-    'IgASgJSAFSDGVycm9yTWVzc2FnZYgBARIrCgR0ZXN0GAMgASgLMhUuZ2VuZXJhdGVkX3Byb3Rv'
-    'LlRlc3RIAFIEdGVzdEIGCgRkYXRhQhAKDl9lcnJvcl9tZXNzYWdl');
+    'IgASgJSAFSDGVycm9yTWVzc2FnZYgBARJBCgxib29sX21lc3NhZ2UYAyABKAsyHC5nZW5lcmF0'
+    'ZWRfcHJvdG8uQm9vbE1lc3NhZ2VIAFILYm9vbE1lc3NhZ2USNwoIc2V0dGluZ3MYBCABKAsyGS'
+    '5nZW5lcmF0ZWRfcHJvdG8uU2V0dGluZ3NIAFIIc2V0dGluZ3NCBgoEZGF0YUIQCg5fZXJyb3Jf'
+    'bWVzc2FnZQ==');
