@@ -1,5 +1,5 @@
 [package]
-name = "fred-tv-lib"
+name = "fred-meat-lib"
 version = "0.1.0"
 edition = "2024"
 
@@ -19,12 +19,22 @@ r2d2_sqlite = "0.34.0"
 rusqlite = { version = "0.39.0", features = ["bundled"] }
 rusqlite_migration = "2.5.0"
 tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["fmt", "registry", "env-filter"] }
+tracing-subscriber = { version = "0.3", features = [
+    "fmt",
+    "registry",
+    "env-filter",
+] }
 tracing-log = "0.2"
 sysdirs = "0.9.4"
 tokio = { version = "1.52", features = ["full"] }
 
 tracing-android = "0.2"
+btleplug = "0.12"
+
+[target.'cfg(target_os = "android")'.dependencies]
+btleplug = { version = "0.12", features = ["jni"] }
+
+jni = "0.19"
 
 [target.'cfg(target_os = "ios")'.dependencies]
 tracing-oslog = "0.2"
@@ -37,7 +47,7 @@ build-windows = "cargo build --release && (if not exist flutter\\windows\\libs m
 build-android = "ANDROID_NDK_HOME=$HOME/Android/Sdk/ndk/29.0.14206865 cargo ndk -t arm64-v8a -t armeabi-v7a -t x86_64 --platform 24 -o flutter/android/app/src/main/jniLibs build --release"
 build-android-debug = "ANDROID_NDK_HOME=$HOME/Android/Sdk/ndk/29.0.14206865 cargo ndk -t arm64-v8a -t armeabi-v7a -t x86_64 --platform 24 -o flutter/android/app/src/main/jniLibs build"
 # install cbindgen, cargo install cbindgen
-gen-header = "cbindgen --config ./template.toml --crate fred-tv-lib --output out/lib.h"
+gen-header = "cbindgen --config ./template.toml --crate fred-meat-lib --output out/lib.h"
 # install protobuf, on windows: scoop install protobuf. AND cargo install protoc-gen-prost
 gen-proto-rust = "protoc --prost_opt=flat_output_dir=true --prost_out=src -I ./protocol/ generated_proto.proto"
 # needed: dart pub global activate protoc_plugin

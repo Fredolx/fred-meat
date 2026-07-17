@@ -3,6 +3,14 @@ use std::collections::HashMap;
 use crate::c::FfiCallback;
 use anyhow::Ok;
 
+#[cfg(target_os = "android")]
+use std::ffi::c_void;
+#[cfg(target_os = "android")]
+use jni::{
+    sys::{jint, JNI_VERSION_1_6},
+    JavaVM,
+};
+
 mod c;
 mod generated_proto;
 mod log;
@@ -97,6 +105,14 @@ pub extern "C" fn update_settings(task_id: u64, callback: FfiCallback, ptr: *con
             })
         },
     );
+}
+
+#[cfg(target_os = "android")]
+#[unsafe(no_mangle)]
+pub extern "system" fn JNI_OnLoad(vm: JavaVM, _reserved: *mut c_void) -> jint {
+    let env = vm.get_env().expect("JNIEnv unavailable in JNI_OnLoad");
+    btleplug::platform::init(&env).expect("btleplug Android init failed");
+    JNI_VERSION_1_6
 }
 
 #[unsafe(no_mangle)]
