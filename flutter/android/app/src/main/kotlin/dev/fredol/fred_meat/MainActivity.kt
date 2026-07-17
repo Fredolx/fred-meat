@@ -1,4 +1,4 @@
-package com.example.fred_meat
+package dev.fredol.fred_meat
 
 import io.flutter.embedding.android.FlutterActivity
 
