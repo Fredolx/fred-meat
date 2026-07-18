@@ -27,6 +27,7 @@ tracing-subscriber = { version = "0.3", features = [
 tracing-log = "0.2"
 sysdirs = "0.9.4"
 tokio = { version = "1.52", features = ["full"] }
+tokio-util = "0.7"
 
 tracing-android = "0.2"
 btleplug = "=0.12.0"

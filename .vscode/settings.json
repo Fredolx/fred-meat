@@ -2,5 +2,4 @@
   // Analyze for Android so #[cfg(target_os = "android")] code is active
   // and gets full IntelliSense. Comment this out (or set to your host
   // triple) when working on non-Android code.
-  "rust-analyzer.cargo.target": "aarch64-linux-android"
 }

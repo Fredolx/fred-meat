@@ -352,6 +352,7 @@ dependencies = [
  "rusqlite_migration",
  "sysdirs",
  "tokio",
+ "tokio-util",
  "tracing",
  "tracing-android",
  "tracing-log",

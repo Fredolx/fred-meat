@@ -138,6 +138,12 @@ class NativeBridge {
     });
   }
 
+  Future<void> scan() async {
+    await _executeAsync((id, cb) {
+      _bindings.scan(id, cb);
+    });
+  }
+
   void dispose() {
     _globalCallback.close();
     for (final completer in _pendingRequests.values) {

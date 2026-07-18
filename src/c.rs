@@ -83,6 +83,13 @@ pub fn queue_blocking<R>(
     });
 }
 
+pub fn spawn<Fut>(fut: Fut) -> tokio::task::JoinHandle<()>
+where
+    Fut: Future<Output = ()> + Send + 'static,
+{
+    RUNTIME.spawn(fut)
+}
+
 pub fn queue_async<Fut, R>(task_id: u64, callback: FfiCallback, fut: Fut)
 where
     Fut: Future<Output = R> + Send + 'static,
@@ -155,5 +162,17 @@ pub fn decode(ptr: *const u8, len: usize) -> Result<Vec<u8>> {
     Ok(raw_slice.to_vec())
 }
 
-static RUNTIME: LazyLock<Runtime> =
-    LazyLock::new(|| Runtime::new().expect("failed to build tokio runtime"));
+#[cfg(target_os = "android")]
+pub static JAVA_VM: std::sync::OnceLock<jni::JavaVM> = std::sync::OnceLock::new();
+
+static RUNTIME: LazyLock<Runtime> = LazyLock::new(|| {
+    let mut builder = tokio::runtime::Builder::new_multi_thread();
+    builder.enable_all();
+    #[cfg(target_os = "android")]
+    builder.on_thread_start(|| {
+        if let Some(vm) = JAVA_VM.get() {
+            let _ = vm.attach_current_thread_permanently();
+        }
+    });
+    builder.build().expect("failed to build tokio runtime")
+});

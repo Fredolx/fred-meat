@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fred_meat/native_bridge.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'ble_denied.dart';
 
@@ -47,6 +48,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       _permissionsGranted = statuses.values.every((s) => s.isGranted);
       _loading = false;
     });
+    try {
+      await NativeBridge.instance.scan();
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> _refreshPermissionStatus() async {

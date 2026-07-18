@@ -10,6 +10,7 @@ use jni::{
 };
 #[cfg(target_os = "android")]
 use std::ffi::c_void;
+use tracing::info;
 
 mod ble;
 mod c;
@@ -35,6 +36,7 @@ pub extern "C" fn initialize(task_id: u64, callback: FfiCallback, ptr: *const u8
                 .set(init_msg.temp_path)
                 .map_err(|e| anyhow::anyhow!(e))?;
             log::init_logger();
+            info!("logging works!");
             sql::apply_migrations()
         },
     )
@@ -108,11 +110,30 @@ pub extern "C" fn update_settings(task_id: u64, callback: FfiCallback, ptr: *con
     );
 }
 
+#[unsafe(no_mangle)]
+pub extern "C" fn scan(task_id: u64, callback: FfiCallback) {
+    c::queue_async(task_id, callback, async move {
+        ble::start_scan().await?;
+        Ok(())
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn stop_scan(task_id: u64, callback: FfiCallback) {
+    c::queue_async(task_id, callback, async move {
+        ble::stop_scan().await;
+        Ok(())
+    })
+}
+
 #[cfg(target_os = "android")]
 #[unsafe(no_mangle)]
 pub extern "system" fn JNI_OnLoad(vm: JavaVM, _reserved: *mut c_void) -> jint {
-    let env = vm.get_env().expect("JNIEnv unavailable in JNI_OnLoad");
-    btleplug::platform::init(&env).expect("btleplug Android init failed");
+    {
+        let env = vm.get_env().expect("JNIEnv unavailable in JNI_OnLoad");
+        btleplug::platform::init(&env).expect("btleplug Android init failed");
+    }
+    let _ = c::JAVA_VM.set(vm);
     JNI_VERSION_1_6
 }
 
