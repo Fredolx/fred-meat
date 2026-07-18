@@ -1673,16 +1673,6 @@ class RustLibBindings {
         void Function(int, FfiCallback, ffi.Pointer<ffi.Uint8>, int)
       >();
 
-  void scan(int task_id, FfiCallback callback) {
-    return _scan(task_id, callback);
-  }
-
-  late final _scanPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Uint64, FfiCallback)>>(
-        'scan',
-      );
-  late final _scan = _scanPtr.asFunction<void Function(int, FfiCallback)>();
-
   void should_show_whats_new(
     int task_id,
     FfiCallback callback,
@@ -1707,6 +1697,17 @@ class RustLibBindings {
       .asFunction<
         void Function(int, FfiCallback, ffi.Pointer<ffi.Uint8>, int)
       >();
+
+  void start_scan(int task_id, FfiCallback callback) {
+    return _start_scan(task_id, callback);
+  }
+
+  late final _start_scanPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Uint64, FfiCallback)>>(
+        'start_scan',
+      );
+  late final _start_scan = _start_scanPtr
+      .asFunction<void Function(int, FfiCallback)>();
 
   void stop_scan(int task_id, FfiCallback callback) {
     return _stop_scan(task_id, callback);

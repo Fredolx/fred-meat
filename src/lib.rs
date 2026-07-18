@@ -111,7 +111,7 @@ pub extern "C" fn update_settings(task_id: u64, callback: FfiCallback, ptr: *con
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn scan(task_id: u64, callback: FfiCallback) {
+pub extern "C" fn start_scan(task_id: u64, callback: FfiCallback) {
     c::queue_async(task_id, callback, async move {
         ble::start_scan().await?;
         Ok(())

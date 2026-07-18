@@ -138,9 +138,15 @@ class NativeBridge {
     });
   }
 
-  Future<void> scan() async {
+  Future<void> start_scan() async {
     await _executeAsync((id, cb) {
-      _bindings.scan(id, cb);
+      _bindings.start_scan(id, cb);
+    });
+  }
+
+  Future<void> stop_scan() async {
+    await _executeAsync((id, cb) {
+      _bindings.stop_scan(id, cb);
     });
   }
 
